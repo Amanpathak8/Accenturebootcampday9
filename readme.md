@@ -39,6 +39,8 @@ kubectl apply -f apache-deployment.yaml
 ### 2️⃣ Nginx ConfigMap
 
 Stores non-sensitive configuration:
+metadata:
+  name: aman-nginx-config
 
 WELCOME_MSG: "Hello from ConfigMap!"
 
