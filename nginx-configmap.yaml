@@ -1,0 +1,8 @@
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: aman-nginx-config
+data:
+  WELCOME_MSG: "Hello from ConfigMap!"
+

@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aman-nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: aman-nginx
+  template:
+    metadata:
+      labels:
+        app: aman-nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+        env:
+        - name: WELCOME_MSG
+          valueFrom:
+            configMapKeyRef:
+              name: aman-nginx-config
+              key: WELCOME_MSG
+        - name: SECRET_MSG
+          valueFrom:
+            secretKeyRef:
+              name: aman-nginx-secret
+              key: SECRET_MSG
+
