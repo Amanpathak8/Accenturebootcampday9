@@ -1,191 +1,124 @@
-🚀 Kubernetes Bootcamp – Day 9
-📌 Project Overview
+# 🚀 Kubernetes Bootcamp -- Day 9 Project
 
-In this project, I worked with Kubernetes using Minikube and kubectl.
-I created deployments, services, ConfigMaps, and Secrets.
-I also connected environment variables from ConfigMap and Secret into a running pod.
+## 📌 Project Overview
 
-This project shows how Kubernetes manages containerized applications in a simple and practical way.
+In this project, I worked with Kubernetes using Minikube and kubectl. I
+created deployments, services, ConfigMaps, and Secrets. I also connected
+environment variables from ConfigMap and Secret inside a running Nginx
+pod.
 
-1️⃣ Core Concepts
-Kubernetes
+This project helped me understand how Kubernetes manages containerized
+applications in a practical way.
 
-Kubernetes is an open-source platform used to deploy, scale, and manage containerized applications automatically.
+------------------------------------------------------------------------
 
-Minikube
+## 🏗️ Technologies Used
 
-Minikube runs a single-node Kubernetes cluster locally or on a VM (like AWS EC2).
-It is mainly used for learning and testing.
+-   Kubernetes
+-   Minikube
+-   kubectl
+-   Docker Images (nginx, httpd)
+-   YAML (Infrastructure as Code)
 
-kubectl
+------------------------------------------------------------------------
 
-kubectl is the command-line tool used to interact with a Kubernetes cluster.
+## 📂 Project Files
 
-Node
+### 1️⃣ Apache Deployment
 
-A node is a machine (virtual or physical) where Kubernetes runs applications.
+-   Uses `httpd:latest`
+-   Runs 3 replicas
+-   Exposes container port 80
 
-Pod
-
-A pod is the smallest unit in Kubernetes.
-It can run one or more containers.
-
-Deployment
-
-A deployment manages pods.
-It:
-
-Keeps the desired number of replicas running
-
-Supports scaling
-
-Supports rolling updates
-
-Service
-
-A service exposes applications inside or outside the cluster.
-
-Types of services:
-
-ClusterIP (internal access)
-
-NodePort (external access through node IP)
-
-LoadBalancer (used in cloud environments)
-
-ConfigMap
-
-Stores non-sensitive configuration data.
-
-Secret
-
-Stores sensitive data like passwords and tokens.
-
-2️⃣ kubectl Commands Used
-kubectl get pods
-kubectl get deploy
-kubectl get svc
-kubectl describe pod <pod-name>
-kubectl scale deployment <name> --replicas=5
-kubectl delete deployment <name>
-kubectl exec -it <pod-name> -- /bin/bash
-
-3️⃣ Apache Deployment (YAML)
-
-I created an Apache deployment with 3 replicas.
-
-📄 File: 
-
-apache-deployment
-
-This deployment:
-
-Uses httpd:latest image
-
-Runs 3 replicas
-
-Exposes port 80
-
-To apply:
+Apply with:
 
 kubectl apply -f apache-deployment.yaml
 
-4️⃣ Nginx Deployment with ConfigMap and Secret
-ConfigMap
+------------------------------------------------------------------------
 
-📄 File: 
+### 2️⃣ Nginx ConfigMap
 
-nginx-configmap
-
-Stores:
+Stores non-sensitive configuration:
 
 WELCOME_MSG: "Hello from ConfigMap!"
 
-Secret
+------------------------------------------------------------------------
 
-📄 File: 
+### 3️⃣ Nginx Secret
 
-nginx-secret
-
-Stores:
+Stores sensitive data:
 
 SECRET_MSG: "Hello from Secret!"
 
-Nginx Deployment
+------------------------------------------------------------------------
 
-📄 File: 
+### 4️⃣ Nginx Deployment
 
-nginx-deployment
+-   Uses `nginx` image
+-   Runs 3 replicas
+-   Reads values from ConfigMap and Secret
+-   Injects them as environment variables
 
-This deployment:
+Environment variables used:
 
-Runs 3 replicas
+-   WELCOME_MSG (from ConfigMap)
+-   SECRET_MSG (from Secret)
 
-Uses nginx image
+Apply with:
 
-Reads values from ConfigMap and Secret
+kubectl apply -f nginx-deployment.yaml
 
-Injects them as environment variables
+------------------------------------------------------------------------
 
-Environment variables:
+### 5️⃣ Nginx Service
 
-WELCOME_MSG from ConfigMap
+-   Type: ClusterIP
+-   Exposes port 80
+-   Connects to pods with label `app: aman-nginx`
 
-SECRET_MSG from Secret
+Apply with:
 
-5️⃣ Nginx Service
+kubectl apply -f nginx-service.yaml
 
-📄 File: 
+------------------------------------------------------------------------
 
-nginx-service
+## 🖥️ Important kubectl Commands Used
 
-This service:
+kubectl get pods kubectl get deploy kubectl get svc kubectl describe pod
+`<pod-name>`{=html} kubectl scale deployment `<name>`{=html}
+--replicas=5 kubectl delete deployment `<name>`{=html} kubectl exec -it
+`<pod-name>`{=html} -- /bin/bash
 
-Type: ClusterIP
+------------------------------------------------------------------------
 
-Exposes port 80
+## 🔍 Verifying ConfigMap and Secret
 
-Connects to pods with label app: aman-nginx
+To verify environment variables inside the pod:
 
-6️⃣ Verifying Inside the Pod
-
-To check environment variables:
-
-kubectl exec -it <pod-name> -- /bin/bash
-echo $WELCOME_MSG
-echo $SECRET_MSG
-printenv
-
+kubectl exec -it `<pod-name>`{=html} -- /bin/bash echo \$WELCOME_MSG
+echo \$SECRET_MSG printenv
 
 Output confirmed:
 
-Hello from ConfigMap!
-Hello from Secret!
+Hello from ConfigMap! Hello from Secret!
 
-7️⃣ What I Learned
+------------------------------------------------------------------------
 
-In this project, I:
+## 📚 What I Learned
 
-Installed and used Minikube
+-   How to create and manage deployments
+-   How to scale applications
+-   How services expose applications
+-   How ConfigMap stores configuration
+-   How Secret stores sensitive data
+-   How to inject environment variables into pods
+-   How Kubernetes automatically manages replicas
+-   How to use YAML for Infrastructure as Code
 
-Used kubectl to manage resources
+------------------------------------------------------------------------
 
-Created deployments with replicas
+## 🎯 Conclusion
 
-Scaled deployments
-
-Exposed applications using services
-
-Created ConfigMaps and Secrets
-
-Injected environment variables into pods
-
-Verified configurations using kubectl exec
-
-Used YAML files for Infrastructure as Code
-
-🎯 Conclusion
-
-This project helped me understand how Kubernetes manages applications in a real environment.
-
-I learned how deployments, services, ConfigMaps, and Secrets work together to create a complete application setup.
+This project helped me understand the core concepts of Kubernetes. I
+learned how deployments, services, ConfigMaps, and Secrets work together
+to run containerized applications efficiently.
